@@ -1,0 +1,114 @@
+\documentclass{report}
+\usepackage[LSB2,LSBC4,LSBC5,T1]{fontenc}
+\usepackage{xskak,chessboard}
+\usepackage{tabto}
+\newcommand{\board}[1]{\chessboard[pgfstyle=straightmove, linewidth=0.22ex, color=blue!60, pgfshortenend=0.3em, arrow=to, setfen={#1}, coloremph=true, whitefieldmaskcolor=yellow!55!gray!33, blackfieldmaskcolor=yellow!55!gray!55]}
+\setchessboard{showmover=false, smallboard, boardfontencoding=LSBC4}
+\setboardfontcolors{blackfieldmask=gray!42, }
+
+\definecolor{mycolor}{rgb}{0.1, 0.1, 0.7}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=mycolor,  %choose some color if you want links to stand out
+}
+
+\usepackage{geometry}% http://ctan.org/pkg/geometry
+\usepackage{titletoc}% http://ctan.org/pkg/titletoc
+\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
+\usepackage{xparse}% http://ctan.org/pkg/xparse
+
+\NewDocumentCommand{\rtocstuff}{O{20pt} m O{100pt}}{% \rtocstuff[<gap>]{<content>}[<width>]
+    \titlecontents{chapter}
+      [0pt]% left margin indent
+      {\bigskip\bfseries}% chapter ToC formatting
+      {\makebox[1.5em][l]{\thecontentslabel}}% chapter label (numbered)
+      {\hspace*{1.5em}}% chapter label (unnumbered)
+      {\titlerule*[1pc]{.}% dotted contents line
+       \thecontentspage% ToC page number
+       \hspace*{#1}% gap between page number & <content>
+       \smash{% remove vertical height of image
+         \raisebox{1.5ex}{% align with top of character
+           \hspace*{#3}% space for <content>
+           \llap{% left overlap
+             #2% actual <content>
+      }}}}%
+    \titlecontents{section}
+      [0pt]% left margin indent
+      {\normalfont}% section ToC formatting
+      {\hspace*{1.5em}\makebox[2.3em][l]{\thecontentslabel}}% section label (numbered)
+      {\hspace*{3.8em}}% section label (unnumbered)
+      {\titlerule*[1pc]{.}% dotted contents line
+       \thecontentspage% ToC page number
+       \hspace*{#1}% gap between page number & <content>
+       \hspace*{#3}% gap for <content>
+      }
+}
+\NewDocumentCommand{\ltocstuff}{O{100pt} m O{20pt}}{% \ltocstuff[<width>]{<content>}[<gap>]
+    \titlecontents{chapter}
+      [0pt]% left margin indent
+      {\bigskip\bfseries}% chapter ToC formatting
+      {\smash{% remove vertical height of image
+         \raisebox{1.5ex}{% align with top of character
+           \rlap{% right overlap
+             #2% actual content
+           }\hspace*{#1}% space for <content>
+       }}%
+       \hspace*{#3}% gap between <content> and ToC entries
+       \makebox[1.5em][l]{\thecontentslabel}}% chapter label (numbered)
+      {\smash{% remove vertical height of image
+         \raisebox{1.5ex}{% align with top of character
+           \rlap{% right overlap
+             #2% actual <content>
+           }\hspace*{#1}% space for <content>
+       }}%
+       \hspace*{1.5em}}% chapter label (unnumbered)
+      {\titlerule*[1pc]{.}% dotted contents line
+       \thecontentspage% ToC page number
+      }
+    \titlecontents{section}
+      [0pt]% left margin indent
+      {\normalfont}% section ToC formatting
+      {\hspace*{#1}% space for <content>
+       \hspace*{#3}% gap between <content> and ToC entries
+       \hspace*{1.5em}\makebox[2.3em][l]{\thecontentslabel}}% section label (numbered)
+      {\hspace*{3.8em}}% section label (unnumbered)
+      {\titlerule*[1pc]{.}% dotted contents line
+       \thecontentspage% ToC page number
+      }
+}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+\begin{titlepage}
+\newgeometry{margin=3cm}
+\centering
+
+\vspace*{\stretch{2}}
+
+\Large Atomic Chess960
+
+\vspace{\stretch{1}}
+
+\normalsize Work by humanwaste
+
+\vspace{\stretch{0.5}}
+
+\begin{tabular}{ll}
+Engine & MV-Stockfish 2020-05-06 \\[2ex]
+\end{tabular}
+
+\vspace{\stretch{3}}
+\end{titlepage}
+
+\restoregeometry
+\cleardoublepage
+
+\contentsmargin{0pt}% Remove right margin in ToC
+\tableofcontents
+
+
+\chapter{Highest to Lowest}
